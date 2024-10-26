@@ -1,0 +1,20 @@
+services:
+  mongodb:
+    image: mongo:latest  
+    container_name: mongodb-rule
+    ports:
+      - "27017:27017"  
+    volumes:
+      - mongo_data:/data/db  
+
+  weather_monitoring_app:
+    build: .
+    ports:
+      - "5000:5000"  
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - DB_NAME=${DB_NAME}  
+    depends_on:
+      - mongodb  
+volumes:
+  mongo_data:
