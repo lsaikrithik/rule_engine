@@ -4,32 +4,29 @@ from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 import os
 
-# Load environment variables from the .env file
+
 load_dotenv()
 
-MONGO_URI = os.getenv('MONGO_URI')  # Load MongoDB URI from .env
+MONGO_URI = os.getenv('MONGO_URI')  
 DB_NAME = os.getenv('DB_NAME') 
 
 app = Flask(__name__)
 
-# Use MONGO_URI from environment variable
 app.config["MONGO_URI"] = MONGO_URI + DB_NAME
 mongo = PyMongo(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')  # Render the index page
+    return render_template('index.html')
 
 @app.route('/create_rule', methods=['POST'])
 def create_rule_api():
     try:
         rule_string = request.json['rule_string']
         ast = create_rule(rule_string)
-        
-        # Serialize the AST for the response
+
         ast_serialized = ast_to_dict(ast)
-        
-        # Optionally save the rule to the database
+
         mongo.db.rules.insert_one({'rule_string': rule_string})
         return jsonify({'ast': ast_serialized})
     except Exception as e:
@@ -40,8 +37,7 @@ def combine_rules_api():
     try:
         rules = request.json['rules']
         ast = combine_rules(rules)
-        
-        # Serialize the combined AST for the response
+
         ast_serialized = ast_to_dict(ast)
         return jsonify({'ast': ast_serialized})
     except Exception as e:
@@ -52,8 +48,7 @@ def evaluate_rule_api():
     try:
         data = request.json['data']
         ast_data = request.json['ast']
-        
-        # Deserialize the AST from the request
+
         ast = dict_to_ast(ast_data)
         result = evaluate_rule(ast, data)
         return jsonify({'result': result})
