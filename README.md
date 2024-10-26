@@ -60,15 +60,15 @@ docker-compose build
 docker-compose up
 ```
 
-### Access the Application
+## Access the Application
 Open your web browser and go to http://localhost:5000 to access the Rule Engine application.
 
-### API Endpoints
+## API Endpoints
 POST /create_rule: Create a new rule using a JSON payload with {"rule_string": "your_rule"}.
 
 POST /combine_rules: Combine multiple rules using a JSON payload with {"rules": ["rule1", "rule2"]}.
 
 POST /evaluate_rule: Evaluate a rule against given data using a JSON payload with {"data": {"key": value}, "ast": {"type": "operator", "left": {...}, "right": {...}, "value": "AND"}}.
 
-### Conclusion
+## Conclusion
 This rule engine application demonstrates how to dynamically create and evaluate complex eligibility rules using a structured approach. The use of Docker allows for easy deployment and management of the application.
