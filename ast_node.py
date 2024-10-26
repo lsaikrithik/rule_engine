@@ -1,16 +1,14 @@
 class Node:
     def __init__(self, type, left=None, right=None, value=None):
-        self.type = type  # "operator" or "operand"
-        self.left = left  # Reference to left Node
-        self.right = right  # Reference to right Node
-        self.value = value  # Optional value for operand nodes
+        self.type = type  
+        self.left = left  
+        self.right = right 
+        self.value = value 
 
 def create_rule(rule_string):
-    # Parsing logic to convert the rule string into an AST
     def parse_expression(expression):
         expression = expression.strip()
         if expression.startswith('('):
-            # Remove outer parentheses
             expression = expression[1:-1].strip()
         
         if 'AND' in expression:
@@ -35,7 +33,6 @@ def combine_rules(rules):
 def evaluate_rule(ast, data):
     if ast.type == "operand":
         condition = ast.value
-        # Simple evaluation logic; extend as needed
         return eval(condition.replace(">", " > ").replace("<", " < ").replace("=", " == "), {}, data)
     elif ast.type == "operator":
         left_result = evaluate_rule(ast.left, data)
